@@ -1,0 +1,42 @@
+name: Python on Linux
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  schedule:
+    - cron: '35 8 * * 1'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python: ["3.8", "3.9", "3.10", "3.11", "3.12", "3.13"]
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - name: Install dependencies
+        run: |
+          sudo apt-get install -y --no-install-recommends \
+            build-essential \
+            libffi-dev \
+            pipx
+      - name: Install project tp pipx
+        run: pipx install .
+      - name: Run offset-tools
+        run: offset_yara --help
+      #- name: Install sphinx to build docs
+      #  run: pip install sphinx mock
+      #- name: Build html
+      #  run: |
+      #    cd docs/source && \
+      #      sphinx-build -W -b html . ../_build/html
+      #- name: Build latex
+      #  run: |
+      #    cd docs/source && \
+      #      sphinx-build -W -b latex . ../_build/html

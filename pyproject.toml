@@ -1,0 +1,47 @@
+[build-system]
+requires = ["setuptools >= 72.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "offset-tools"
+dynamic = ["version"]
+description = "offset-tools - get lines from files and blocks from devices by offset"
+authors = [
+  {name = "Sebastian Weigmann", email = "seb.weigmann@gmail.com"}
+]
+maintainers = [
+  {name = "Sebastian Weigmann", email = "seb.weigmann@gmail.com"}
+]
+readme = "README.md"
+license = {file = "LICENSE"}
+classifiers = [
+  "Development Status :: 5 - Production/Stable",
+  "Programming Language :: Python :: 3",
+  "Environment :: Console"
+]
+dependencies = [
+  #"ssdeep>=3.4.1"
+  #"ssdeep@git+https://github.com/DinoTools/python-ssdeep#egg=3.4.1",
+  #"ssdeeper@git+https://codeberg.org/DFIR/python-ssdeeper#egg=3.5.1"
+]
+requires-python = ">=3.8"
+
+[tool.setuptools.dynamic]
+version = {attr = "common.version.progver"}
+
+[tool.pytest.ini_options]
+minversion = "8.0"
+addopts = "-v"
+testpaths = [
+    "test"
+]
+
+[project.urls]
+#Homepage = "https://example.com"
+#Documentation = "https://readthedocs.org"
+Repository = "https://codeberg.org/DFIR/offset-tools.git"
+#"Bug Tracker" = "https://github.com/me/spam/issues"
+#Changelog = "https://github.com/sweigmann/offset-tools/blob/main/CHANGELOG.md"
+
+[project.scripts]
+offset_yara = "offset_yara:main"
