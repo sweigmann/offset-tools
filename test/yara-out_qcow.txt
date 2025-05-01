@@ -9,11 +9,3 @@ find_yes test/cirros-0.6.3-x86_64.qcow2
 0x102897c:$yes01: yes
 0x1240e39:$yes01: YES
 0x14435c8:$yes01: YES
-0x9929d3:$yes02: llc
-0xacea94:$yes02: 5ZX
-0x9929d3:$yes03: llc
-0x13c1974:$yes03: ZZX
-0x4ac9d6:$yes04: lFU
-0x67c331:$yes04: lFU
-0x8e58db:$yes04: lFU
-0xf08a1e:$yes04: ZRV

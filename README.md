@@ -36,16 +36,13 @@ which was referenced by the offset.
 
 #### example:
 
-Let's have a look at this rule which will match the strings "yes" 
-and "/home/yes".
+Let's have a look at this rule which will match the string "yes"
+case insensitively.
 
 ```yara
 rule find_yes {
     strings:
         $yes01 = "yes" fullword nocase ascii wide 
-        $yes02 = "yes" base64 base64wide
-        $yes03 = "Yes" base64 base64wide
-        $yes04 = "YES" base64 base64wide
     condition:
         any of them
 }
