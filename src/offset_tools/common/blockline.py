@@ -11,8 +11,10 @@ import os
 import argparse
 
 # specific imports
-from common import mytypes as T
-
+try:
+    from common import mytypes as T
+except ModuleNotFoundError:
+    from offset_tools.common import mytypes as T
 
 # common parsing module for all offset tools
 # to be included by CLI programs line this:

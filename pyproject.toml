@@ -27,7 +27,7 @@ dependencies = [
 requires-python = ">=3.8"
 
 [tool.setuptools.dynamic]
-version = {attr = "common.version.progver"}
+version = {attr = "offset_tools.common.version.progver"}
 
 [tool.pytest.ini_options]
 minversion = "8.0"
@@ -44,4 +44,4 @@ Repository = "https://codeberg.org/DFIR/offset-tools.git"
 #Changelog = "https://github.com/sweigmann/offset-tools/blob/main/CHANGELOG.md"
 
 [project.scripts]
-offset_yara = "offset_yara:main"
+offset_yara = "offset_tools.offset_yara:main"

@@ -1,5 +1,5 @@
 # flake8: noqa: E501
-# This is offset-yara for getting lines or storage blocks by yara offsets.
+# This is offset_yara for getting lines or storage blocks by yara offsets.
 #   (C) Sebastian Weigmann, 2025
 #   This software is released under:
 #   GNU GENERAL PUBLIC LICENSE, Version 3
@@ -13,26 +13,33 @@
 #
 # generic imports
 import argparse
-import os.path
+import os
 import sys
 import re
 import hashlib
 
 # specific imports
-#from enum import IntEnum, StrEnum
-from common import errors as ERR
-from common import mytypes as T
-from common import blockline
-from common import version
+# from enum import IntEnum, StrEnum
+try:
+    from common import errors as ERR
+    from common import mytypes as T
+    from common import version
+    from common import blockline
+except ModuleNotFoundError:
+    from offset_tools.common import errors as ERR
+    from offset_tools.common import mytypes as T
+    from offset_tools.common import version
+    from offset_tools.common import blockline
+
 
 # 3rd-party imports
 # none yet
 
 # global variables
-oy_progname = "offset_yara"
-oy_progver = "2"
-progname = oy_progname + " (" + version.progname + ")"
-progver = version.progver + "-" + oy_progver
+my_progname = "offset_yara"
+my_progver = "4"
+progname = my_progname + " (" + version.progname + ")"
+progver = version.progver + "-" + my_progver
 ERR.verbosity = 0
 
 
@@ -43,20 +50,20 @@ def parse_args():
         prog=progname,
         description="Get lines or blocks by offset",
         epilog="Note: This tool cannot extract content from multiple files in one run. All offsets given in --yarafile FILE must originate from the same input file!",
-        parents=[blockline.parser]
+        parents=[blockline.parser],
     )
     parser.add_argument(
         "--yarafile",
         type=T.type_infile,
         default="stdin",
         metavar="FILE",
-        help="source of YARA output (default: %(default)s)"
+        help="source of YARA output (default: %(default)s)",
     )
     parser.add_argument(
         "--nodupes",
         "-u",
         action="store_true",
-        help="results are given for the smallest offset only, all duplicates are omitted"
+        help="results are given for the smallest offset only, all duplicates are omitted",
     )
     parser.add_argument(
         "--infile",
@@ -64,7 +71,7 @@ def parse_args():
         type=T.type_infile,
         default=None,
         metavar="FILE",
-        help="file or image to extract lines or blocks from"
+        help="file or image to extract lines or blocks from",
     )
     parser.add_argument(
         "--outdir",
@@ -91,17 +98,16 @@ def parse_args():
         sys.exit(ERR.EXIT.ARGPARSE)
 
 
-
 def get_offsets(yaraout: list) -> list:
     offsets = []
-    regex = r'^(0x[0-9a-f]+)'
+    regex = r"^(0x[0-9a-f]+)"
     # user_yes yes.txt          --> None
     # 0x14e:$user_yes01: yes    --> 0x14e
     # 0x213:$user_yes01: yes    --> 0x213
     rec = re.compile(regex)
     for line in yaraout:
         if type(line) is bytes:
-            line = line.decode('utf-8')
+            line = line.decode("utf-8")
         regex_group = rec.match(line)
         if regex_group:
             hex_offset = regex_group.group()
@@ -125,7 +131,7 @@ def __main():
     else:
         with open(args.yarafile, "rb") as f:
             list_offsets = get_offsets(f.readlines())
-    assert(type(list_offsets) is list)
+    assert type(list_offsets) is list
     bl = blockline.BlockLine(args)
     with open(args.infile, "rb") as ifile:
         for p in list_offsets:
@@ -135,7 +141,10 @@ def __main():
             elif args.datatype == "blocks":
                 buf = bl.dump_block(ifile, p)
             else:
-                ERR.printmsg("Neither blocks nor lines, what shall I do? Bailing out!", ERR.ERRLVL.CRIT)
+                ERR.printmsg(
+                    "Neither blocks nor lines, what shall I do? Bailing out!",
+                    ERR.ERRLVL.CRIT,
+                )
                 raise ValueError(f"Undefined datatype: {args.datatype}")
             # dup removal before further processing
             # this is heavy on the cpu
@@ -154,7 +163,14 @@ def __main():
             else:
                 if not os.path.exists(args.outdir):
                     os.makedirs(args.outdir)
-                opfname = os.path.join(args.outdir, f"line_{hex(p)}.txt" if args.datatype == "lines" else f"block_{hex(p)}.bin")
+                opfname = os.path.join(
+                    args.outdir,
+                    (
+                        f"line_{hex(p)}.txt"
+                        if args.datatype == "lines"
+                        else f"block_{hex(p)}.bin"
+                    ),
+                )
                 with open(opfname, "wb") as ofile:
                     ofile.write(buf)
     return

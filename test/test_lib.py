@@ -10,7 +10,7 @@ class Test_offset_yara(object):
     # end-to-end tests
     def test_process(self):
         p = subprocess.run(
-            ["python3", "src/offset_yara.py", "--help"],
+            ["python3", os.path.join("src", "offset_tools", "offset_yara.py"), "--help"],
             capture_output=True,
             text=True,
             check=True,
@@ -21,7 +21,7 @@ class Test_offset_yara(object):
 
     def test_lines(self):
         p = subprocess.run(
-            ["python3", os.path.join("src", "offset_yara.py"), "lines", "--yarafile", os.path.join("test", "yara-out_yes.txt"), "--infile", os.path.join("test", "yes.txt")],
+            ["python3", os.path.join("src", "offset_tools", "offset_yara.py"), "lines", "--yarafile", os.path.join("test", "yara-out_yes.txt"), "--infile", os.path.join("test", "yes.txt")],
             capture_output=True,
             text=True,
             check=True,
@@ -34,7 +34,7 @@ class Test_offset_yara(object):
     def test_blocks(self):
         if (os.path.exists("blocks") and os.path.isdir("blocks")):
             shutil.rmtree("blocks")
-        p = subprocess.run(["python3", os.path.join("src", "offset_yara.py"), "blocks", "--yarafile", os.path.join("test", "yara-out_qcow.txt"), "--infile", os.path.join("test", "cirros-0.6.3-x86_64.qcow2"), "--outdir", "blocks", "--blocksize", "32", "--nodupes"],
+        p = subprocess.run(["python3", os.path.join("src", "offset_tools", "offset_yara.py"), "blocks", "--yarafile", os.path.join("test", "yara-out_qcow.txt"), "--infile", os.path.join("test", "cirros-0.6.3-x86_64.qcow2"), "--outdir", "blocks", "--blocksize", "32", "--nodupes"],
             capture_output=True,
             text=False,
             check=True,
