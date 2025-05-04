@@ -37,7 +37,7 @@ except ModuleNotFoundError:
 
 # global variables
 my_progname = "offset_dump"
-my_progver = "1"
+my_progver = "2"
 progname = my_progname + " (" + version.progname + ")"
 progver = version.progver + "-" + my_progver
 ERR.verbosity = 0
@@ -50,13 +50,6 @@ def parse_args() -> argparse.Namespace:
         prog=my_progname,
         description="Get lines or blocks by yara or strings offset",
         epilog="Note: This tool cannot extract content from multiple files in one run. All offsets given in --offsetfile FILE must originate from the same input!",
-    )
-    parser.add_argument(
-        "--verbose",
-        "-v",
-        action="count",
-        default=0,
-        help="can be given multiple times to increase verbosity",
     )
     parser.add_argument("--version", action="version", version=progname + " v" + progver)
     parser_common = argparse.ArgumentParser(add_help=False)
@@ -112,8 +105,8 @@ def parse_args() -> argparse.Namespace:
 
 def get_offsets(input: list, offsetmethod: str, offsettype: str | None = None) -> list:
     offsets: list[int] = []
-    regex = r"^(0x[0-9a-f]+)" if offsetmethod == "yara" else r"^ *([0-9a-f]+) "
     base = 10 if offsettype == "dec" else 16
+    regex = r"^(0x[0-9a-f]+)" if offsetmethod == "yara" else r"^ *([0-9a-f]+) "
     # YARA:
     # user_yes yes.txt          --> None
     # 0x14e:$user_yes01: yes    --> 0x14e
@@ -212,4 +205,4 @@ def main() -> None:
 
 # void main() { do stuff }
 if __name__ == "__main__":
-    __main()
+    main()
