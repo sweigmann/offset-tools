@@ -28,8 +28,12 @@ jobs:
             pipx
       - name: Install project tp pipx
         run: pipx install .
-      - name: Run offset-tools
-        run: offset_yara --help
+      - name: Run offset-tools (generic)
+        run: offset_dump --help
+      - name: Run offset-tools (strings)
+        run: offset_dump strings --help
+      - name: Run offset-tools (yara)
+        run: offset_dump yara --help
       #- name: Install sphinx to build docs
       #  run: pip install sphinx mock
       #- name: Build html

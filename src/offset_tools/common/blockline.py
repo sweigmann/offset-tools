@@ -24,7 +24,7 @@ parser.add_argument("--before", "-B", type=int, default=0, metavar="NUM", help="
 parser.add_argument("--after", "-A", type=int, default=0, metavar="NUM", help="print NUM units after matching block/line")
 parser.add_argument("--blocksize", "-s", type=int, default=512, metavar="BS", help="block size for block mode, buffer size for line mode (default: %(default)d)")
 parser.add_argument("--linesep", "-d", choices=["unix", "windows", "macos"], default="unix", help="line endings for a text file to dump lines from (default: %(default)s)")
-parser.add_argument("datatype", choices=["lines", "blocks"], help="state if input is parsed as lines or blocks")
+parser.add_argument("datatype", choices=["lines", "blocks"], metavar="datatype", help="state if input is parsed as lines or blocks (choices: %(choices)s)")
 
 
 class BlockLine(object):

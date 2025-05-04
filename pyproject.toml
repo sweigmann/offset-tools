@@ -44,4 +44,4 @@ Repository = "https://codeberg.org/DFIR/offset-tools.git"
 #Changelog = "https://github.com/sweigmann/offset-tools/blob/main/CHANGELOG.md"
 
 [project.scripts]
-offset_yara = "offset_tools.offset_yara:main"
+offset_dump = "offset_tools.offset_dump:main"

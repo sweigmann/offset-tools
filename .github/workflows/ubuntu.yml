@@ -23,6 +23,7 @@ jobs:
             build-essential \
             git \
             git-lfs \
+            zstd \
             libffi-dev \
             python3-full \
             python3-dev \
