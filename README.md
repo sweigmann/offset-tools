@@ -7,6 +7,7 @@ on an offset. Offsets can be provided as output from `yara` or `strings`.
 <img src="https://github.com/sweigmann/offset-tools/actions/workflows/python-linux.yml/badge.svg?branch=main">
 <img src="https://github.com/sweigmann/offset-tools/actions/workflows/debian.yml/badge.svg?branch=main">
 <img src="https://github.com/sweigmann/offset-tools/actions/workflows/ubuntu.yml/badge.svg?branch=main">
+<img src="https://img.shields.io/github/downloads/sweigmann/offset-tools/total">
 
 ## installation:
 
